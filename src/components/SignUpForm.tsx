@@ -12,11 +12,11 @@ const SignUpForm: React.FC<SignUpProps> = ({ inputFields, setInputFields }) => {
   const { name, email, year, month, day } = inputFields;
   const isDisabled = useMemo(
     () => !year || !day || !month || !name || !email,
-    [year, day, month, email, name],
+    [year, day, month, email, name]
   );
 
   const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     setInputFields({
       ...inputFields,
@@ -27,7 +27,6 @@ const SignUpForm: React.FC<SignUpProps> = ({ inputFields, setInputFields }) => {
   return (
     <div className="mx-auto flex max-w-[400px] flex-col">
       <h2 className="my-7 text-3xl font-bold">Create your account</h2>
-
       <div className="flex flex-col gap-5">
         <TextInput
           label="Name"

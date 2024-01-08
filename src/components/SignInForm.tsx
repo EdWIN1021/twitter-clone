@@ -1,29 +1,34 @@
 import { useContext } from "react";
 import TextInput from "../ui/TextInput";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { StepperContext } from "../ui/Stepper";
 import { SignInProps } from "../types";
+import { supabase } from "../lib/supabase";
+import { Provider } from "@supabase/supabase-js";
 
 const SignInForm: React.FC<SignInProps> = ({ inputFields, setInputFields }) => {
   const { nextStep } = useContext(StepperContext);
 
-  const navigate = useNavigate();
+  const handleSignInWithOAuth = async (provider: Provider) => {
+    await supabase.auth.signInWithOAuth({
+      provider,
+    });
+  };
 
   return (
     <div className="mx-auto flex h-[580px] max-w-[300px] flex-col items-center">
       <h2 className="mb-7 mt-3 self-start text-3xl font-bold">Sign in to X</h2>
 
-      {/* todo */}
       <div
         className="my-3 mb-4 flex h-[38px] w-full items-center justify-center gap-2 rounded-full border border-[rgb(207,217,222)] text-sm hover:bg-[rgba(29,155,240,0.1)] active:bg-[rgba(66,133,244,.1)]"
-        onClick={() => navigate("/home")}
+        onClick={() => handleSignInWithOAuth("google")}
       >
         <img
           src="/google.svg"
           alt="google-logo"
           className="h-[18px] w-[18px]"
         />
-        <button className="font-medium text-[rgb(60,64,67)] ">
+        <button className="font-medium text-[rgb(60,64,67)]">
           Sign In with Google
         </button>
       </div>
@@ -31,7 +36,7 @@ const SignInForm: React.FC<SignInProps> = ({ inputFields, setInputFields }) => {
       {/* todo */}
       <div
         className=" my-3 flex h-[38px] w-full items-center justify-center gap-2 rounded-full border border-[rgb(207,217,222)] text-sm hover:bg-[rgb(230,230,230)] active:bg-[rgb(204,204,204)]"
-        onClick={() => navigate("/home")}
+        onClick={() => handleSignInWithOAuth("github")}
       >
         <img
           src="/github.svg"

@@ -33,6 +33,7 @@ const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
   const navigate = useNavigate();
 
+
   useEffect(() => {
     const {
       data: { subscription },

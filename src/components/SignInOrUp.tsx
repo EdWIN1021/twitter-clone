@@ -3,6 +3,8 @@ import { supabase } from "../lib/supabase";
 import { Provider } from "@supabase/supabase-js";
 
 const SignInOrUp = () => {
+
+  
   const handleSignInWithOAuth = async (provider: Provider) => {
     await supabase.auth.signInWithOAuth({
       provider,

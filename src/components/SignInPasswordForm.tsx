@@ -1,15 +1,35 @@
 import TextInput from "../ui/TextInput";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import PasswordInput from "../ui/PasswordInput";
 import { SignInProps } from "../types";
+import { supabase } from "../lib/supabase";
+import { toast } from "react-toastify";
 
 const SignInPasswordForm: React.FC<SignInProps> = ({
   inputFields,
   setInputFields,
 }) => {
   const { password, email } = inputFields;
-  const navigate = useNavigate();
+
+  const handleSignIn = async () => {
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error) {
+      toast.error(error.message, {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
 
   return (
     <div className="mx-auto flex max-w-[400px] flex-col">
@@ -38,9 +58,8 @@ const SignInPasswordForm: React.FC<SignInProps> = ({
         <span className="text-sm text-[rgb(29,155,240)]">Forgot password?</span>
       </Link>
 
-      {/* todo */}
       <button
-        onClick={() => navigate("/home")}
+        onClick={handleSignIn}
         className={`text-lg font-bold text-white ${
           !password ? "bg-[rgba(0,0,0,0.5)]" : "bg-[rgba(15,20,25,1)]"
         }  mb-2 mt-[200px] w-full cursor-pointer rounded-full py-3.5`}

@@ -1,14 +1,14 @@
 import { useMemo } from "react";
-import { useNavigate } from "react-router-dom";
 import PasswordInput from "../ui/PasswordInput";
 import { SignUpProps } from "../types";
 import { monthData } from "../constants";
+import { supabase } from "../lib/supabase";
+import { toast } from "react-toastify";
 
 const SignUpPasswordForm: React.FC<SignUpProps> = ({
   inputFields,
   setInputFields,
 }) => {
-  const navigate = useNavigate();
   const { email, password, name } = inputFields;
 
   const birthday = useMemo(
@@ -21,7 +21,31 @@ const SignUpPasswordForm: React.FC<SignUpProps> = ({
     [inputFields]
   );
 
-  console.log(email, password, name, birthday);
+  const handleSignup = async () => {
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          full_name: name,
+          birthday,
+        },
+      },
+    });
+
+    if (error) {
+      toast.error(error.message, {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
 
   return (
     <div className="mx-auto flex max-w-[400px] flex-col">
@@ -39,12 +63,7 @@ const SignUpPasswordForm: React.FC<SignUpProps> = ({
       />
 
       <button
-        // disabled={!!password}
-        onClick={
-          () => navigate("/home")
-          // todo
-          // signUp(email, password, birthday, name, () => navigate("/home"))
-        }
+        onClick={handleSignup}
         className={`text-lg font-bold text-white ${
           !inputFields.password
             ? "bg-[rgba(0,0,0,0.5)]"
