@@ -7,6 +7,7 @@ import { AuthContext } from "../contexts/AuthContext";
 import { Navigate, useNavigate } from "react-router-dom";
 import { supabase } from "../lib/supabase";
 import { toast } from "react-toastify";
+import { Profiles } from "../types";
 
 const Username = () => {
   const [input, setInput] = useState("");
@@ -33,7 +34,7 @@ const Username = () => {
       });
     } else {
       //update profile
-      setProfile({ ...profile, username: input });
+      setProfile({ ...(profile as Profiles), username: input });
       navigate("/home");
     }
   };

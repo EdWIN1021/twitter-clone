@@ -1,6 +1,4 @@
-import { useContext } from "react";
 import TextInput from "../ui/TextInput";
-import { AuthContext } from "../contexts/AuthContext";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import PasswordInput from "../ui/PasswordInput";
@@ -10,7 +8,6 @@ const SignInPasswordForm: React.FC<SignInProps> = ({
   inputFields,
   setInputFields,
 }) => {
-  const { signIn } = useContext(AuthContext);
   const { password, email } = inputFields;
   const navigate = useNavigate();
 
@@ -41,12 +38,9 @@ const SignInPasswordForm: React.FC<SignInProps> = ({
         <span className="text-sm text-[rgb(29,155,240)]">Forgot password?</span>
       </Link>
 
+      {/* todo */}
       <button
-        onClick={() =>
-          signIn(inputFields.email, inputFields.password, () =>
-            navigate("/home"),
-          )
-        }
+        onClick={() => navigate("/home")}
         className={`text-lg font-bold text-white ${
           !password ? "bg-[rgba(0,0,0,0.5)]" : "bg-[rgba(15,20,25,1)]"
         }  mb-2 mt-[200px] w-full cursor-pointer rounded-full py-3.5`}

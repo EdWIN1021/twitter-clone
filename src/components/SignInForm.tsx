@@ -1,12 +1,10 @@
 import { useContext } from "react";
 import TextInput from "../ui/TextInput";
-import { AuthContext } from "../contexts/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import { StepperContext } from "../ui/Stepper";
 import { SignInProps } from "../types";
 
 const SignInForm: React.FC<SignInProps> = ({ inputFields, setInputFields }) => {
-  const { signInWithGoogle, signInWithGithub } = useContext(AuthContext);
   const { nextStep } = useContext(StepperContext);
 
   const navigate = useNavigate();
@@ -15,9 +13,10 @@ const SignInForm: React.FC<SignInProps> = ({ inputFields, setInputFields }) => {
     <div className="mx-auto flex h-[580px] max-w-[300px] flex-col items-center">
       <h2 className="mb-7 mt-3 self-start text-3xl font-bold">Sign in to X</h2>
 
+      {/* todo */}
       <div
         className="my-3 mb-4 flex h-[38px] w-full items-center justify-center gap-2 rounded-full border border-[rgb(207,217,222)] text-sm hover:bg-[rgba(29,155,240,0.1)] active:bg-[rgba(66,133,244,.1)]"
-        onClick={() => signInWithGoogle(() => navigate("/home"))}
+        onClick={() => navigate("/home")}
       >
         <img
           src="/google.svg"
@@ -29,9 +28,10 @@ const SignInForm: React.FC<SignInProps> = ({ inputFields, setInputFields }) => {
         </button>
       </div>
 
+      {/* todo */}
       <div
         className=" my-3 flex h-[38px] w-full items-center justify-center gap-2 rounded-full border border-[rgb(207,217,222)] text-sm hover:bg-[rgb(230,230,230)] active:bg-[rgb(204,204,204)]"
-        onClick={() => signInWithGithub(() => navigate("/home"))}
+        onClick={() => navigate("/home")}
       >
         <img
           src="/github.svg"

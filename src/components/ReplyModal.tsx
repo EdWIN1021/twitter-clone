@@ -2,13 +2,13 @@ import { Dispatch, SetStateAction } from "react";
 import Overlay from "../ui/Overlay";
 import { createPortal } from "react-dom";
 import { XMarkIcon } from "@heroicons/react/24/solid";
-import { Reply, Tweet } from "../types";
+import { Tweet } from "../types";
 import { getDateRange } from "../utils/date";
 import PostForm from "./PostForm";
 
 const ReplyModal: React.FC<{
   toggle: Dispatch<SetStateAction<boolean>>;
-  tweet: Tweet | Reply;
+  tweet: Tweet;
 }> = ({ toggle, tweet }) => {
   return createPortal(
     <>
@@ -35,7 +35,7 @@ const ReplyModal: React.FC<{
 
             <div className="flex-1">
               <div>
-                <span className="font-bold">{tweet.profiles?.full_name}</span>
+                <span className="font-bold">{tweet.full_name}</span>
                 <span className="ml-1 text-label">
                   @{tweet?.username} &middot;{" "}
                   {getDateRange(new Date(tweet.created_at || new Date()))}
@@ -61,7 +61,7 @@ const ReplyModal: React.FC<{
         />
       </div>
     </>,
-    document.body,
+    document.body
   );
 };
 
