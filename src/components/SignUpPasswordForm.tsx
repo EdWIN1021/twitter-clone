@@ -1,5 +1,4 @@
-import { useContext, useMemo } from "react";
-import { AuthContext } from "../contexts/AuthContext";
+import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import PasswordInput from "../ui/PasswordInput";
 import { SignUpProps } from "../types";
@@ -9,7 +8,6 @@ const SignUpPasswordForm: React.FC<SignUpProps> = ({
   inputFields,
   setInputFields,
 }) => {
-  const { signUp } = useContext(AuthContext);
   const navigate = useNavigate();
   const { email, password, name } = inputFields;
 
@@ -18,10 +16,12 @@ const SignUpPasswordForm: React.FC<SignUpProps> = ({
       new Date(
         Number(inputFields.year),
         monthData.indexOf("January") + 1,
-        Number(inputFields.day),
+        Number(inputFields.day)
       ),
-    [inputFields],
+    [inputFields]
   );
+
+  console.log(email, password, name, birthday);
 
   return (
     <div className="mx-auto flex max-w-[400px] flex-col">
@@ -40,8 +40,10 @@ const SignUpPasswordForm: React.FC<SignUpProps> = ({
 
       <button
         // disabled={!!password}
-        onClick={() =>
-          signUp(email, password, birthday, name, () => navigate("/home"))
+        onClick={
+          () => navigate("/home")
+          // todo
+          // signUp(email, password, birthday, name, () => navigate("/home"))
         }
         className={`text-lg font-bold text-white ${
           !inputFields.password
