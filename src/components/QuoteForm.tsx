@@ -4,7 +4,7 @@ import { ImageData, Tweet } from "../types";
 import { getDateRange } from "../utils/date";
 import PostActions from "./PostActions";
 import { GlobeAmericasIcon } from "@heroicons/react/24/outline";
-import TextArea from "../ui/TextArea";
+import PostTextArea from "../ui/PostTextArea";
 import { createTweet, uploadTweetImage } from "../utils/tweet";
 import { XCircleIcon } from "@heroicons/react/24/solid";
 import { v4 as uuidv4 } from "uuid";
@@ -49,7 +49,7 @@ const QuoteForm: React.FC<{
         </div>
 
         <div className="flex-1">
-          <TextArea
+          <PostTextArea
             placeholder={"Add a comment"}
             value={content}
             onChange={(e) => setContent(e.target.value)}

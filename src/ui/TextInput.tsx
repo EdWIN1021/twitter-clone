@@ -4,8 +4,6 @@ import { twMerge } from "tailwind-merge";
 
 interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
-  variant?: "primary" | "secondary" | "tertiary";
-  outline?: boolean;
   value: string;
   id: string;
   showLength?: boolean;
