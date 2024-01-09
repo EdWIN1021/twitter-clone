@@ -33,6 +33,8 @@ export interface Profiles {
   full_name?: string;
   username?: string;
   created_at?: Date;
+  bio?: string;
+  cover_url?: string;
 }
 
 export interface ImageData {

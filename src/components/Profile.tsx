@@ -34,7 +34,11 @@ const Profile = () => {
 
             <div className="h-[calc(100vh-52px)] overflow-y-auto">
               <div className="relative pb-6">
-                <div className="h-[200px] bg-[rgb(207,217,222)]"></div>
+                <div className="h-[200px] bg-[rgb(207,217,222)]">
+                  {profile?.cover_url && (
+                    <img className="h-full w-full" src={profile?.cover_url} />
+                  )}
+                </div>
 
                 <div className="text-right mt-3 mr-2">
                   <button
