@@ -1,12 +1,13 @@
 import { ArrowLeftIcon, CalendarDaysIcon } from "@heroicons/react/24/outline";
 import { Suspense, lazy, useContext, useState } from "react";
-import { Link } from "react-router-dom";
-import { AuthContext } from "../contexts/AuthContext";
+import { Link, useParams } from "react-router-dom";
 import moment from "moment";
 import clsx from "clsx";
 import useFollowers from "../hooks/useFollowers";
-import { FollowingContext } from "../contexts/FollowingContext";
 import EditProfileModal from "./EditProfileModal";
+import useProfile from "../hooks/useProfile";
+import { AuthContext } from "../contexts/AuthContext";
+import useFollowings from "../hooks/useFollowings";
 const ProfilePosts = lazy(() => import("./ProfilePosts"));
 const ProfileReplies = lazy(() => import("./ProfileReplies"));
 const ProfileLikes = lazy(() => import("./ProfileLikes"));
@@ -14,12 +15,14 @@ const ProfileLikes = lazy(() => import("./ProfileLikes"));
 const tabs = ["posts", "replies", "likes"];
 
 const Profile = () => {
-  const { profile, loading } = useContext(AuthContext);
-  const { numOfFollowers } = useFollowers();
-  const { numOfFollowings } = useContext(FollowingContext);
+  const { userId } = useParams();
+  const { numOfFollowers } = useFollowers(userId);
+  const { numOfFollowings } = useFollowings(userId);
   const [showEditProfileModal, setShowEditProfileModal] = useState(false);
-
   const [tab, setTab] = useState("posts");
+  const { profile, loading } = useProfile(userId);
+  const { currentUser } = useContext(AuthContext);
+
   return (
     <>
       <div className="min-h-[100vh] w-full max-w-[600px] border-x md:min-w-[600px]">
@@ -40,13 +43,15 @@ const Profile = () => {
                   )}
                 </div>
 
-                <div className="text-right mt-3 mr-2">
-                  <button
-                    className="border rounded-full px-3 py-1 text-[15px] font-bold hover:bg-[rgba(10,20,15,.1)]"
-                    onClick={() => setShowEditProfileModal(true)}
-                  >
-                    Edit profile
-                  </button>
+                <div className="text-right mt-3 mr-2 min-h-[32.5px]">
+                  {currentUser?.id === userId && (
+                    <button
+                      className="border rounded-full px-3 py-1 text-[15px] font-bold hover:bg-[rgba(10,20,15,.1)]"
+                      onClick={() => setShowEditProfileModal(true)}
+                    >
+                      Edit profile
+                    </button>
+                  )}
                 </div>
 
                 <div className="px-4">
@@ -55,6 +60,8 @@ const Profile = () => {
                       {profile?.full_name}
                     </h2>
                     <span className="text-label">@{profile?.username}</span>
+
+                    {profile?.bio && <p className="py-2">{profile?.bio}</p>}
                   </div>
 
                   <div className="mb-3 flex">
@@ -102,19 +109,19 @@ const Profile = () => {
                   </button>
                 ))}
               </div>
-              {tab === "posts" && (
+              {tab === "posts" && profile && (
                 <Suspense fallback={<div>Loading...</div>}>
-                  <ProfilePosts />
+                  <ProfilePosts userId={profile?.id} />
                 </Suspense>
               )}
-              {tab === "replies" && (
+              {tab === "replies" && profile && (
                 <Suspense fallback={<div>Loading...</div>}>
-                  <ProfileReplies />
+                  <ProfileReplies userId={profile?.id} />
                 </Suspense>
               )}
-              {tab === "likes" && (
+              {tab === "likes" && profile && (
                 <Suspense fallback={<div>Loading...</div>}>
-                  <ProfileLikes />
+                  <ProfileLikes userId={profile?.id} />
                 </Suspense>
               )}
             </div>

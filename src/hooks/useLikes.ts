@@ -1,21 +1,19 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Tweet } from "../types";
 import { supabase } from "../lib/supabase";
-import { AuthContext } from "../contexts/AuthContext";
 
-const useLikes = () => {
+const useLikes = (userId: string) => {
   const [likedTweets, setLikedTweets] = useState<Tweet[] | []>([]);
-  const { currentUser } = useContext(AuthContext);
 
   useEffect(() => {
     (async () => {
       const { data } = await supabase.rpc("get_user_likes", {
-        current_user_id: currentUser?.id,
+        current_user_id: userId,
       });
 
       setLikedTweets(data);
     })();
-  }, [currentUser]);
+  }, []);
 
   return { likedTweets };
 };

@@ -39,7 +39,7 @@ const PostForm = ({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [open, toggle] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, profile } = useContext(AuthContext);
   const smileRef = useRef<HTMLDivElement>(null);
   const [leftPosition, setLeftPosition] = useState(0);
   const [topPosition, setTopPosition] = useState(0);
@@ -88,7 +88,7 @@ const PostForm = ({
       ) {
         const { imageData } = await uploadTweetImage(
           fileInputRef?.current?.files[0],
-          uuidv4(),
+          uuidv4()
         );
         image_url = `${import.meta.env.VITE_SUPABASE_BUCKET_URL}/${
           (imageData as ImageData).fullPath
@@ -119,9 +119,7 @@ const PostForm = ({
           {currentUser ? (
             <img
               className="rounded-full"
-              src={
-                currentUser?.user_metadata.avatar_url || "/default_profile.png"
-              }
+              src={profile?.avatar_url || "/default_profile.png"}
               alt="default..."
             />
           ) : (
@@ -191,7 +189,7 @@ const PostForm = ({
                 disabled={!content}
                 className={clsx(
                   "rounded-full bg-primary-blue px-4 py-1.5 font-bold text-white",
-                  { "opacity-50": !content },
+                  { "opacity-50": !content }
                 )}
               >
                 {type.slice(0, 1).toUpperCase() + type.slice(1, type.length)}

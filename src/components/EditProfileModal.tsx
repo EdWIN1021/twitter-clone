@@ -38,6 +38,7 @@ const EditProfileModal: FC<{
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     let cover_url;
+    let avatar_url;
 
     if (coverImage) {
       await supabase.storage
@@ -47,6 +48,7 @@ const EditProfileModal: FC<{
             profile?.cover_url?.split("/").length - 1
           ]}`,
         ]);
+
       const { data } = await supabase.storage
         .from("user_covers")
         .upload(uuidv4(), coverImage);
@@ -56,17 +58,37 @@ const EditProfileModal: FC<{
       }/user_covers/${data?.path}`;
     }
 
+    //todo
+    if (avatarImage) {
+      await supabase.storage
+        .from("user_avatars")
+        .remove([
+          `${profile?.avatar_url?.split("/")[
+            profile?.avatar_url?.split("/").length - 1
+          ]}`,
+        ]);
+
+      const { data } = await supabase.storage
+        .from("user_avatars")
+        .upload(uuidv4(), avatarImage);
+
+      avatar_url = `${
+        import.meta.env.VITE_SUPABASE_BUCKET_URL
+      }/user_avatars/${data?.path}`;
+    }
+
     await supabase
       .from("profiles")
       .update({
         full_name: name || profile?.full_name,
         bio: bio || profile?.bio,
         cover_url: cover_url || profile?.cover_url,
+        avatar_url: avatar_url || profile?.avatar_url,
       })
       .eq("id", profile?.id);
 
-    window.location.reload();
-    toggle(false);
+    // window.location.reload();
+    // toggle(false);
   };
 
   return createPortal(
@@ -74,7 +96,7 @@ const EditProfileModal: FC<{
       <input
         type="file"
         className="hidden"
-        accept="image/jpg"
+        accept="image/png, image/jpeg"
         onChange={handleAvatar}
         ref={avatarImageRef}
       />
@@ -95,6 +117,7 @@ const EditProfileModal: FC<{
             className="w-5 cursor-pointer"
             onClick={() => toggle(false)}
           />
+
           <span className="flex-1 text-[20px] font-bold">Edit profile</span>
           <button
             type="submit"

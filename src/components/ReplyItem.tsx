@@ -9,7 +9,7 @@ const ReplyItem: React.FC<{ userReply: Tweet }> = ({ userReply }) => {
   useEffect(() => {
     (async () => {
       const { data } = await supabase.rpc("get_tweet", {
-        tweetid: "0b3a67e7-6bf7-4374-a066-a01ed6e7a5b2",
+        tweetid: userReply.tweet_id,
       });
 
       if (data) {

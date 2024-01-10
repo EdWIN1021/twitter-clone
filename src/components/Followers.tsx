@@ -3,10 +3,10 @@ import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import { supabase } from "../lib/supabase";
-import { Profiles } from "../types";
+import { Profile } from "../types";
 
 const Followers = () => {
-  const [followers, setFollowers] = useState<Profiles[] | null>(null);
+  const [followers, setFollowers] = useState<Profile[] | null>(null);
   const { profile } = useContext(AuthContext);
 
   useEffect(() => {

@@ -7,7 +7,7 @@ import { AuthContext } from "../contexts/AuthContext";
 import { Navigate, useNavigate } from "react-router-dom";
 import { supabase } from "../lib/supabase";
 import { toast } from "react-toastify";
-import { Profiles } from "../types";
+import { Profile } from "../types";
 
 const Username = () => {
   const [input, setInput] = useState("");
@@ -33,8 +33,7 @@ const Username = () => {
         theme: "light",
       });
     } else {
-      //update profile
-      setProfile({ ...(profile as Profiles), username: input });
+      setProfile({ ...(profile as Profile), username: input });
       navigate("/home");
     }
   };

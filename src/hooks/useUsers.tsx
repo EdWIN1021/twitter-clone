@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from "react";
-import { Profiles } from "../types";
+import { Profile } from "../types";
 import { getUsers } from "../utils/tweet";
 import { AuthContext } from "../contexts/AuthContext";
 
 const useUsers = (search: string) => {
-  const [users, setUsers] = useState<Profiles[]>([]);
+  const [users, setUsers] = useState<Profile[]>([]);
   const [loading, setLoading] = useState(true);
   const { currentUser } = useContext(AuthContext);
 
@@ -15,7 +15,7 @@ const useUsers = (search: string) => {
           setLoading(true);
           try {
             const { data } = await getUsers(search, currentUser.id);
-            setUsers(data as Profiles[]);
+            setUsers(data as Profile[]);
           } catch (err) {
             console.log(err);
           } finally {
@@ -23,7 +23,7 @@ const useUsers = (search: string) => {
           }
         }
       },
-      search ? 500 : 0,
+      search ? 500 : 0
     );
 
     return () => {

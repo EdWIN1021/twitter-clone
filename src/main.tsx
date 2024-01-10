@@ -62,7 +62,7 @@ const router = createBrowserRouter([
                     element: <TweetDetail />,
                   },
                   {
-                    path: "profile/:full_name",
+                    path: "profile/:userId",
                     element: <Profile />,
                   },
                   {
@@ -92,6 +92,6 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <>
     <RouterProvider router={router} />
     <ToastContainer />
-  </>,
+  </>
   //</React.StrictMode>
 );

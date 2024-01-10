@@ -72,9 +72,9 @@ const TweetItem: React.FC<{ tweet: Tweet; showBar?: boolean }> = ({
         (like) =>
           currentUser &&
           like.user_id === currentUser.id &&
-          tweet.id === like.tweet_id,
+          tweet.id === like.tweet_id
       ),
-    [likes, currentUser, tweet.id],
+    [likes, currentUser, tweet.id]
   );
 
   const handleReply = (event: React.MouseEvent) => {
@@ -107,7 +107,13 @@ const TweetItem: React.FC<{ tweet: Tweet; showBar?: boolean }> = ({
         {currentUser && tweet && (
           <div className="flex flex-nowrap  px-4 pb-3 pt-4 hover:bg-[rgba(0,0,0,0.03)]">
             <div className="mr-2 flex flex-col items-center ">
-              <div className="w-10 cursor-pointer">
+              <div
+                className="w-10 cursor-pointer"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  navigate(`/home/profile/${tweet?.user_id}`);
+                }}
+              >
                 <img
                   className="rounded-full"
                   src={tweet?.avatar_url || "/default_profile.png"}
@@ -122,7 +128,16 @@ const TweetItem: React.FC<{ tweet: Tweet; showBar?: boolean }> = ({
 
             <div className="flex-1">
               <div>
-                <span className="font-bold">{tweet?.full_name}</span>
+                <span
+                  className="font-bold hover:underline"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigate(`/home/profile/${tweet?.user_id}`);
+                  }}
+                >
+                  {tweet?.full_name}
+                </span>
+
                 <span className="ml-1 text-label">
                   @{tweet.username} &middot;
                   {getDateRange(tweet?.created_at)}

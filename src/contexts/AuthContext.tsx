@@ -9,14 +9,14 @@ import {
 } from "react";
 import { supabase } from "../lib/supabase";
 import { User } from "@supabase/supabase-js";
-import { Profiles } from "../types";
+import { Profile } from "../types";
 import { useNavigate } from "react-router-dom";
 
 interface AuthContextProps {
   currentUser: User | null | undefined;
-  profile: Profiles | null;
+  profile: Profile | null;
   loading: boolean;
-  setProfile: Dispatch<SetStateAction<Profiles | null>>;
+  setProfile: Dispatch<SetStateAction<Profile | null>>;
 }
 
 export const AuthContext = createContext<AuthContextProps>({
@@ -28,11 +28,10 @@ export const AuthContext = createContext<AuthContextProps>({
 
 const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<User | null | undefined>(null);
-  const [profile, setProfile] = useState<Profiles | null>(null);
+  const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
-
 
   useEffect(() => {
     const {
@@ -45,7 +44,7 @@ const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
           .eq("id", session?.user?.id)
           .then((res) => {
             if (res.status === 200 && res.data) {
-              setProfile(res?.data[0] as Profiles);
+              setProfile(res?.data[0] as Profile);
               setCurrentUser(session?.user);
               setLoading(false);
             }

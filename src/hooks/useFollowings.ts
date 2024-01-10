@@ -1,19 +1,41 @@
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../contexts/AuthContext";
+import { useEffect, useState } from "react";
 import { getTotalFollowings } from "../utils/tweet";
 
-const useFollowings = () => {
+const useFollowings = (userId: string | undefined) => {
   const [numOfFollowings, setNumOfFollowings] = useState(0);
-  const { currentUser } = useContext(AuthContext);
 
   useEffect(() => {
     (async () => {
-      if (currentUser) {
-        const { count } = await getTotalFollowings(currentUser?.id);
+      if (userId) {
+        const { count } = await getTotalFollowings(userId);
         setNumOfFollowings(count || 0);
       }
     })();
-  }, [currentUser]);
+  }, []);
+
+  // useEffect(() => {
+  //   const subscription = supabase
+  //     .channel("tweets_db_changes")
+  //     .on(
+  //       "postgres_changes",
+  //       {
+  //         event: "INSERT",
+  //         schema: "public",
+  //         table: "tweets",
+  //         filter: "type=eq.reply",
+  //       },
+  //       async (payload) => {
+  //         const { data } = await supabase.rpc("get_tweet", {
+  //           tweetid: payload.new.id,
+  //         });
+  //       }
+  //     )
+  //     .subscribe();
+
+  //   return () => {
+  //     subscription.unsubscribe();
+  //   };
+  // }, [replies]);
 
   return { numOfFollowings, setNumOfFollowings };
 };

@@ -27,7 +27,7 @@ export interface Like {
   tweet_id: string;
 }
 
-export interface Profiles {
+export interface Profile {
   id: string;
   avatar_url?: string;
   full_name?: string;

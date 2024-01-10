@@ -3,12 +3,12 @@ import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import { supabase } from "../lib/supabase";
-import { Profiles } from "../types";
+import { Profile } from "../types";
 import { PostgrestResponse } from "@supabase/supabase-js";
 
 interface User {
   id: string;
-  profiles: Profiles;
+  profiles: Profile;
 }
 
 const Following = () => {
@@ -26,7 +26,7 @@ const Following = () => {
             avatar_url,
             full_name,
             username
-           )`,
+           )`
         )
         .eq("follower_user_id", profile?.id)) as PostgrestResponse<User>;
 

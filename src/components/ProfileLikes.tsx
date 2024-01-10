@@ -1,15 +1,14 @@
 import useLikedTweets from "../hooks/useLikes";
 import TweetItem from "./TweetItem";
 
-const ProfileLikes = () => {
-  const { likedTweets } = useLikedTweets();
+const ProfileLikes: React.FC<{ userId: string }> = ({ userId }) => {
+  const { likedTweets } = useLikedTweets(userId);
 
   return (
     <div>
       {likedTweets.map((likedTweet) => (
         <TweetItem key={likedTweet.id} tweet={likedTweet} />
       ))}
-      ;
     </div>
   );
 };

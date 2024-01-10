@@ -1,8 +1,9 @@
 import useUserTweets from "../hooks/useUserTweets";
 import TweetItem from "./TweetItem";
 
-const ProfilePosts = () => {
-  const { tweets } = useUserTweets();
+const ProfilePosts: React.FC<{ userId: string }> = ({ userId }) => {
+  const { tweets } = useUserTweets(userId);
+
   return (
     <div>
       {tweets.map((tweet) => (

@@ -1,19 +1,17 @@
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../contexts/AuthContext";
+import { useEffect, useState } from "react";
 import { getTotalFollowers } from "../utils/tweet";
 
-const useFollowers = () => {
+const useFollowers = (userId: string | undefined) => {
   const [numOfFollowers, setNumOfFollowers] = useState(0);
-  const { currentUser } = useContext(AuthContext);
 
   useEffect(() => {
     (async () => {
-      if (currentUser) {
-        const { count } = await getTotalFollowers(currentUser?.id);
+      if (userId) {
+        const { count } = await getTotalFollowers(userId);
         setNumOfFollowers(count || 0);
       }
     })();
-  }, [currentUser]);
+  }, []);
 
   return { numOfFollowers };
 };

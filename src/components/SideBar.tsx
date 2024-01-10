@@ -61,7 +61,7 @@ const SideBar = () => {
     {
       title: "Profile",
       icon: <UserIcon />,
-      to: `/home/profile/${profile?.full_name}`,
+      to: `/home/profile/${profile?.id}`,
     },
     {
       title: "More",

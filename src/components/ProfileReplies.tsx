@@ -1,8 +1,8 @@
 import useUserReplies from "../hooks/useUserReplies";
 import ReplyItem from "./ReplyItem";
 
-const ProfileReplies = () => {
-  const { userReplies } = useUserReplies();
+const ProfileReplies: React.FC<{ userId: string }> = ({ userId }) => {
+  const { userReplies } = useUserReplies(userId);
 
   return (
     <div>
