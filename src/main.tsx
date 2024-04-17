@@ -1,5 +1,5 @@
 import ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createHashRouter, RouterProvider } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import Root from "./pages/root";
 import Home from "./pages/home";
@@ -20,7 +20,7 @@ import Profile from "./components/Profile";
 import Followers from "./components/Followers";
 import Following from "./components/Following";
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: "/",
     element: <RootLayout />,
