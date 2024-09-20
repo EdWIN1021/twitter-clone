@@ -55,13 +55,16 @@ const Following = () => {
 
       {following?.map((user) => (
         <div className="flex items-center px-4 py-3" key={user.profiles.id}>
-          <div className="mr-3 w-10 cursor-pointer">
+          <Link
+            to={`/home/profile/${user.profiles.id}`}
+            className="mr-3 w-10 cursor-pointer"
+          >
             <img
               className="rounded-full"
               src={user.profiles.avatar_url || "/default_profile.png"}
               alt="default..."
             />
-          </div>
+          </Link>
           <div className="mr-12 flex flex-1 flex-col">
             <span className="whitespace-nowrap font-bold">
               {user.profiles.full_name}
