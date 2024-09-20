@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../contexts/AuthContext";
@@ -8,11 +8,12 @@ import { Profile } from "../types";
 const Followers = () => {
   const [followers, setFollowers] = useState<Profile[] | null>(null);
   const { profile } = useContext(AuthContext);
+  const { userId } = useParams();
 
   useEffect(() => {
     const getFollowing = async () => {
       const { data } = await supabase.rpc("get_followers", {
-        current_user_id: profile?.id,
+        current_user_id: userId,
       });
       setFollowers(data);
     };

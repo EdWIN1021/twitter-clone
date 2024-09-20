@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../contexts/AuthContext";
@@ -14,6 +14,7 @@ interface User {
 const Following = () => {
   const [following, setFollowing] = useState<User[] | null>(null);
   const { profile } = useContext(AuthContext);
+  const { userId } = useParams();
 
   useEffect(() => {
     const getFollowing = async () => {
@@ -28,7 +29,7 @@ const Following = () => {
             username
            )`
         )
-        .eq("follower_user_id", profile?.id)) as PostgrestResponse<User>;
+        .eq("follower_user_id", userId)) as PostgrestResponse<User>;
 
       setFollowing(data);
     };

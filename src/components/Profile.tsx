@@ -73,14 +73,20 @@ const Profile = () => {
 
                   <div className="flex gap-2">
                     <div className="text-sm">
-                      <Link to="/home/following" className="hover:underline">
+                      <Link
+                        to={`/home/following/${userId}`}
+                        className="hover:underline"
+                      >
                         <span className="font-bold">{numOfFollowings}</span>{" "}
                         <span className="text-label">Following</span>
                       </Link>
                     </div>
 
                     <div className="text-sm ">
-                      <Link to="/home/followers" className="hover:underline">
+                      <Link
+                        to={`/home/followers/${userId}`}
+                        className="hover:underline"
+                      >
                         <span className="font-bold">{numOfFollowers}</span>{" "}
                         <span className="text-label">Followers</span>
                       </Link>

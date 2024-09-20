@@ -66,11 +66,11 @@ const router = createHashRouter([
                     element: <Profile />,
                   },
                   {
-                    path: "followers",
+                    path: "followers/:userId",
                     element: <Followers />,
                   },
                   {
-                    path: "following",
+                    path: "following/:userId",
                     element: <Following />,
                   },
                 ],
